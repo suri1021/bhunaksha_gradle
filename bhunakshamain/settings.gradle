@@ -1,0 +1,6 @@
+rootProject.name = 'bhunakshamain'
+
+include ':bhunakshacommon'
+project(':bhunakshacommon').projectDir = new File('../bhunakshacommon')
+include ':statedataprovidermn'
+project(':statedataprovidermn').projectDir = new File('../statedataprovidermn')
