@@ -19,6 +19,7 @@ public class MapInfoController {
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE,
             method = RequestMethod.POST)
+    @CrossOrigin(origins = "http://localhost:3000")
     public Map getVVVVExtentGeoref(@RequestParam("srs") int srs,
                                    @RequestParam(value = "vsrno", required = false) String vsrNo,
                                    @RequestParam(value = "giscode", required = false) String gisCode,

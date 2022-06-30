@@ -174,7 +174,7 @@ public class KhasramapRepository implements KhasramapDAO {
             sqlQuery += " AND id=:id";
         }
         sqlQuery += ") AS sub ";
-        Query query = entityManager.createQuery(sqlQuery, Map.class);
+        Query query = entityManager.createQuery(sqlQuery, Tuple.class);
 
         return (Map) query.getSingleResult();
     }
@@ -227,7 +227,7 @@ public class KhasramapRepository implements KhasramapDAO {
             query.setParameter(":plotNos", plotNos);
         }
 
-        return query.getResultList();
+        return DaoUtil.convertTuplesToMap((List<Tuple>) query.getResultList());
     }
 
     @Override
