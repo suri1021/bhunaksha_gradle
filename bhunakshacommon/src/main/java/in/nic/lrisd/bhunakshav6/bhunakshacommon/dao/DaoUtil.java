@@ -8,15 +8,17 @@ import java.util.List;
 import java.util.Map;
 
 public class DaoUtil {
-    public static List<Map<String, Object>> convertTuplesToMap(List<Tuple> tuples) {
+    public static List<Map<String, Object>> convertTuplesToMap(List<Object> tuples) {
         List<Map<String, Object>> result = new ArrayList<>();
-        for (Tuple single : tuples) {
-            Map<String, Object> tempMap = new HashMap<>();
-            for (TupleElement<?> key : single.getElements()) {
-                tempMap.put(key.getAlias(), single.get(key));
-            }
-            result.add(tempMap);
+        for (int i = 0; i<tuples.size(); i++) {
+            Object obj[] = (Object[]) tuples.get(i);
+            Map map = new HashMap();
+            map.put("the_geom", obj[0]);
+            map.put("kide", obj[1]);
+            map.put("bhucode", obj[2]);
+            result.add(map);
         }
+
         return result;
     }
 

@@ -49,10 +49,10 @@ public class SecurityConfiguration implements  WebMvcConfigurer{
 */
 
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/WMS");
-    }
+  //  @Bean
+ //   public WebSecurityCustomizer webSecurityCustomizer() {
+   //     return (web) -> web.ignoring().antMatchers("/WMS");
+    //}
 
 /*    @Override
     public void addCorsMappings(CorsRegistry registry) {

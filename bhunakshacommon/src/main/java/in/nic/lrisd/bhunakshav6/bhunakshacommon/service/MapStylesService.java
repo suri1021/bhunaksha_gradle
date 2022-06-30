@@ -22,4 +22,8 @@ public class MapStylesService {
         return mapStylesDAO.findAll();
     }
 
+    public MapStyles findByCode(String code) {
+        return mapStylesDAO.findByCode(code);
+    }
+
 }

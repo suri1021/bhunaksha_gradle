@@ -422,15 +422,10 @@ public class MapDataUtil {
     }
 
     public Style getMapStyle(String mapStyleCode) {
+        MapStyles mapStyles = mapStylesService.findByCode(mapStyleCode);
+        if(mapStyles == null) return null;
 
-        List<MapStyles> mapStylesList = mapStylesService.findAll();
-
-        mapStylesList = mapStylesList.stream().filter(style -> style.getCode() == mapStyleCode).collect(Collectors.toList());
-
-        if (!CollectionUtils.isEmpty(mapStylesList))
-            return getStyleFromSymbolizer(mapStylesList.get(0).getSldSymbolizers());
-
-        return null;
+        return getStyleFromSymbolizer(mapStyles.getSldSymbolizers());
     }
 
     public double getScaleFactor(String gisCode) {
@@ -483,8 +478,8 @@ public class MapDataUtil {
     }
 
     public Style getStyleFromSymbolizer(String symbolyzer) {
-        String servlet = "http://localhost:8080/bhunakshaweb3/SymbolServlet?state=\" + stateCode + \"&amp;code=";
-        symbolyzer = symbolyzer.replaceAll("BHUNAKSHASYMBOL://", servlet);
+      //  String servlet = "http://localhost:8080/SymbolServlet?code=";
+     //   symbolyzer = symbolyzer.replaceAll("BHUNAKSHASYMBOL://", servlet);
 
         String sld = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"
                 + "<StyledLayerDescriptor version=\"1.0.0\" \n"

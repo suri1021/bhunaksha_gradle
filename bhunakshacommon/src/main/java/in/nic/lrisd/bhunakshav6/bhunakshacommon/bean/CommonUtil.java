@@ -2,6 +2,7 @@ package in.nic.lrisd.bhunakshav6.bhunakshacommon.bean;
 
 import com.jamesmurty.utils.XMLBuilder;
 import in.nic.lrisd.bhunakshav6.bhunakshacommon.globalsettings.TablePartition;
+import org.apache.commons.codec.binary.Base64;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
@@ -318,5 +319,9 @@ public class CommonUtil {
     {
         int[] subStrIdx = TablePartition.getSubstrRange4Java(state);
         return "_" + bhucode.substring(subStrIdx[0], subStrIdx[1]);
+    }
+
+    public static byte[] convertToBase64Image(String imageData) {
+        return Base64.decodeBase64(imageData);
     }
 }

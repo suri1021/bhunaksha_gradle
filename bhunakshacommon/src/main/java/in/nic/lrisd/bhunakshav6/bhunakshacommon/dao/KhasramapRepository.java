@@ -227,7 +227,7 @@ public class KhasramapRepository implements KhasramapDAO {
             query.setParameter(":plotNos", plotNos);
         }
 
-        return DaoUtil.convertTuplesToMap((List<Tuple>) query.getResultList());
+        return DaoUtil.convertTuplesToMap(query.getResultList());
     }
 
     @Override
