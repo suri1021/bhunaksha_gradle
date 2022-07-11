@@ -1,11 +1,22 @@
 package in.nic.lrisd.bhunakshav6.bhunakshacommon.service;
 
+import com.google.gson.Gson;
+import in.nic.lrisd.bhunakshav6.bhunakshacommon.entity.AppSettings;
+import in.nic.lrisd.bhunakshav6.bhunakshacommon.entity.Khasramap;
+import in.nic.lrisd.bhunakshav6.bhunakshacommon.entity.Vvvv;
+import in.nic.lrisd.bhunakshav6.bhunakshacommon.util.Constants;
 import org.apache.commons.lang3.StringUtils;
+import org.geotools.referencing.ReferencingFactoryFinder;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
+import org.opengis.referencing.operation.MathTransformFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +37,11 @@ public class MapInfoServiceImpl implements MapInfoService{
 
     @Autowired
     private MapDataUtil mapDataUtil;
+
+    @Autowired
+    private AppSettingsService appSettingsService;
+
+    private GeometryFactory geometryFactory = new GeometryFactory();
 
     @Override
     public Map getExtent(String gisCode, String plotId) throws Exception {
@@ -95,16 +111,49 @@ public class MapInfoServiceImpl implements MapInfoService{
 
     @Override
     public Map getScaleFactor(String gisCode) throws Exception {
-        return null;
+        Map ext = new HashMap();
+
+        Vvvv vvvv = vvvvService.findByBhucode(gisCode);
+        if (vvvv != null) {
+            ext.put("scaleFactor", vvvv.getMapscale());
+        }
+
+        return ext;
     }
 
     @Override
     public Map getPlotAtPosition(String gisCode, double x, double y) {
-        return null;
+        Map ext = new HashMap();
+        Point pt = geometryFactory.createPoint(new Coordinate(x, y));
+        Khasramap khasramap = khasramapService.findByIntersectionPoint(stateDataProvider.getStateCode(), gisCode, pt.toText());
+        if (khasramap == null) return null;
+
+        ext.put("id", khasramap.getId());
+        ext.put("kide", khasramap.getKide());
+        Gson gson = new Gson();
+        if (khasramap.getAttributes_json() != null) {
+            Map attrs = gson.fromJson(khasramap.getAttributes_json().toString(), HashMap.class);
+            ext.put("attributes_json", attrs);
+        }
+        else {
+            ext.put("attributes_json", "");
+        }
+
+        return ext;
     }
 
     @Override
     public Map getPlotAtXYGeoref(int srs, double x, double y, String pVsrno, String pGisCode, String skipCodes) {
+        MathTransformFactory mf = ReferencingFactoryFinder.getMathTransformFactory(null);
+        Point pt = geometryFactory.createPoint(new Coordinate(x, y));
+        AppSettings appSettings = appSettingsService.findByCode(Constants.PLOT_AT_XY_EXTRA_FILTER_CQL.code);
+        String cql = "";
+        if (appSettings != null && appSettings.getCode() != null
+                                        && WMSLayerBuilder.isValidFilter(appSettings.getCode())) {
+            cql = appSettings.getCode().replaceAll("(?i)strsubstring", "substring");
+        }
+
+        
         return null;
     }
 

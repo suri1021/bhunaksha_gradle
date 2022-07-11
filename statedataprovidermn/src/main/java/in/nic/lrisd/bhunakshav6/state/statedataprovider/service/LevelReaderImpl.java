@@ -2,14 +2,14 @@ package in.nic.lrisd.bhunakshav6.state.statedataprovider.service;
 
 import in.nic.lrisd.bhunakshav6.bhunakshacommon.dao.LevelReaderDAO;
 import in.nic.lrisd.bhunakshav6.bhunakshacommon.entity.CodeValueObj;
-import in.nic.lrisd.bhunakshav6.bhunakshacommon.service.LevelReaderService;
+import in.nic.lrisd.bhunakshav6.bhunakshacommon.service.LevelReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class LevelReaderServiceImpl implements LevelReaderService {
+public class LevelReaderServiceImpl implements LevelReader {
 
     @Autowired
     private LevelReaderDAO levelReaderDAO;

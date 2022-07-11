@@ -3,12 +3,15 @@ package in.nic.lrisd.bhunakshav6.bhunakshacommon.service;
 import in.nic.lrisd.bhunakshav6.bhunakshacommon.entity.CodeValueObj;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface LevelDecoderService {
 
     public int getVsrLevelCount() throws Exception;
     public int getMapLevelCount() throws Exception;
     public String getLevelNameEn(int level) throws Exception;
+
+    public List<String> getAllLevelLablesEn();
     public String getLevelNameLn(int level) throws Exception;
     public String createVsrno(String... levelCodes) throws Exception;
     public String createGisCode(String... levelCodes) throws Exception;
