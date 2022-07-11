@@ -21,7 +21,7 @@ public class SecurityConfiguration implements  WebMvcConfigurer{
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers("/**").permitAll()
-                .antMatchers(HttpMethod.POST,"/mapinfo/*").permitAll()
+             //   .antMatchers(HttpMethod.POST,"/mapinfo/*").permitAll()
                 .anyRequest().authenticated();
                 //.antMatchers(HttpMethod.POST, "/login").permitAll()
              //   .antMatchers(HttpMethod.POST,"/newuser/*").permitAll()
@@ -29,7 +29,6 @@ public class SecurityConfiguration implements  WebMvcConfigurer{
              //   .antMatchers(HttpMethod.GET,"/exploreCourse").permitAll()
              //   .anyRequest().authenticated();
         return http.build();
-
     }
 /*
     @Bean
@@ -49,10 +48,10 @@ public class SecurityConfiguration implements  WebMvcConfigurer{
 */
 
 
-  //  @Bean
- //   public WebSecurityCustomizer webSecurityCustomizer() {
-   //     return (web) -> web.ignoring().antMatchers("/WMS");
-    //}
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+       return (web) -> web.ignoring().antMatchers("/WMS");
+    }
 
 /*    @Override
     public void addCorsMappings(CorsRegistry registry) {

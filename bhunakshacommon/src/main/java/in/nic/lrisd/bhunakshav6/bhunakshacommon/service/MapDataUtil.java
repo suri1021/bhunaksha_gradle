@@ -54,13 +54,13 @@ import java.util.stream.Collectors;
 public class MapDataUtil {
 
     @Autowired
-    private LevelReaderService levelReader;
+    private LevelReader levelReader;
 
     @Autowired
-    private LevelDecoderService levelDecoder;
+    private LevelDecoder levelDecoder;
 
     @Autowired
-    private StateDataProviderService stateDataProvider;
+    private StateDataProvider stateDataProvider;
 
     @Autowired
     private KhasramapService khasramapService;
@@ -710,5 +710,4 @@ public class MapDataUtil {
         }
         return attribution;
     }
-
 }

@@ -3,7 +3,6 @@ package in.nic.lrisd.bhunakshav6.bhunakshamain.controller;
 import in.nic.lrisd.bhunakshav6.bhunakshacommon.entity.Khasramap;
 import in.nic.lrisd.bhunakshav6.bhunakshacommon.entity.Vvvv;
 import in.nic.lrisd.bhunakshav6.bhunakshacommon.service.KhasramapService;
-import in.nic.lrisd.bhunakshav6.bhunakshacommon.service.LevelReaderService;
 import in.nic.lrisd.bhunakshav6.bhunakshacommon.service.VvvvService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +19,6 @@ public class MapController {
 
     @Autowired(required = true)
     private KhasramapService khasramapService;
-
-    @Autowired(required = true)
-    private LevelReaderService levelReaderService;
 
     @Autowired(required = true)
     private VvvvService vvvvService;

@@ -105,10 +105,10 @@ public class KhasramapRepository implements KhasramapDAO {
         String sqlQuery = "SELECT id,CASE WHEN kide IS NULL THEN '' ELSE kide END, attributes_json || ('{\"_kide\":\"' || kide || '\"}' )::jsonb jsonbdata, pniu FROM khasramap"
                 +tableid+" where bhucode=:bhucode AND  st_intersects(wkb_geometry, st_geomfromtext(:pointText)) ";
 
-        Query query = entityManager.createNativeQuery(sqlQuery,Map.class);
+        Query query = entityManager.createNativeQuery(sqlQuery,Tuple.class);
         query.setParameter("bhucode", bhucode);
         query.setParameter("pointText", pointText);
-        return (Map) query.getSingleResult();
+        return DaoUtil.convertTupleToMap((Tuple) query.getSingleResult());
     }
 
     @Override
@@ -123,7 +123,7 @@ public class KhasramapRepository implements KhasramapDAO {
             sqlQuery += "and id=:id";
         }
 
-        Query query = entityManager.createNativeQuery(sqlQuery, Map.class);
+        Query query = entityManager.createNativeQuery(sqlQuery, Tuple.class);
         query.setParameter("bhucode", bhucode);
         query.setParameter("kide", kide);
 
@@ -131,7 +131,7 @@ public class KhasramapRepository implements KhasramapDAO {
             query.setParameter("id", id);
         }
 
-        return (Map) query.getSingleResult();
+        return DaoUtil.convertTupleToMap((Tuple) query.getSingleResult());
     }
 
     @Override
@@ -220,11 +220,11 @@ public class KhasramapRepository implements KhasramapDAO {
         query.setParameter("bboxtext", bboxText);
         query.setParameter("bhucode", bhucode);
         if (! CollectionUtils.isEmpty(plotIds)) {
-           query.setParameter(":plotIds", plotIds);
+           query.setParameter("plotIds", plotIds);
         }
 
         if (! CollectionUtils.isEmpty(plotNos)) {
-            query.setParameter(":plotNos", plotNos);
+            query.setParameter("plotNos", plotNos);
         }
 
         return DaoUtil.convertTuplesToMap(query.getResultList());

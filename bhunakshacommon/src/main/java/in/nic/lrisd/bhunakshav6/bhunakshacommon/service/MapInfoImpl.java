@@ -6,10 +6,13 @@ import in.nic.lrisd.bhunakshav6.bhunakshacommon.entity.Khasramap;
 import in.nic.lrisd.bhunakshav6.bhunakshacommon.entity.Vvvv;
 import in.nic.lrisd.bhunakshav6.bhunakshacommon.util.Constants;
 import org.apache.commons.lang3.StringUtils;
+import org.geotools.geometry.jts.JTSFactoryFinder;
 import org.geotools.referencing.ReferencingFactoryFinder;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.io.ParseException;
+import org.locationtech.jts.io.WKTReader;
 import org.opengis.referencing.operation.MathTransformFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +24,10 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class MapInfoServiceImpl implements MapInfoService{
+public class MapInfoImpl implements MapInfo {
 
     @Autowired
-    private LevelDecoderService levelDecoder;
+    private LevelDecoder levelDecoder;
 
     @Autowired
     private KhasramapService khasramapService;
@@ -33,7 +36,7 @@ public class MapInfoServiceImpl implements MapInfoService{
     private  VvvvService vvvvService;
 
     @Autowired
-    private StateDataProviderService stateDataProvider;
+    private StateDataProvider stateDataProvider;
 
     @Autowired
     private MapDataUtil mapDataUtil;
@@ -41,7 +44,10 @@ public class MapInfoServiceImpl implements MapInfoService{
     @Autowired
     private AppSettingsService appSettingsService;
 
-    private GeometryFactory geometryFactory = new GeometryFactory();
+    GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory(null);
+
+    WKTReader reader = new WKTReader(geometryFactory);
+
 
     @Override
     public Map getExtent(String gisCode, String plotId) throws Exception {
@@ -263,6 +269,22 @@ public class MapInfoServiceImpl implements MapInfoService{
     }
 
     @Override
+    public Map getPlotInfo(String gisCode, String plotNo) {
+        Map info = new HashMap();
+
+        Khasramap khasramap = khasramapService.findByBhucodeKide(stateDataProvider.getStateCode(), gisCode, plotNo);
+        if (khasramap != null) {
+            Point point = getCentroid(khasramap.getWkbGeometry());
+            info.put("center_x", point.getX());
+            info.put("center_y", point.getY());
+            info.put("plotNo", plotNo);
+            info.put("gisCode", gisCode);
+
+        }
+        return info;
+    }
+
+    @Override
     public Map<String, List<Map<String, String>>> getAllLayersEdition(String giscode, String kide) {
         return null;
     }
@@ -310,5 +332,22 @@ public class MapInfoServiceImpl implements MapInfoService{
     @Override
     public String getPointsfromPNIU(String pniu, String gisCode) {
         return null;
+    }
+
+
+    @Override
+    public Point getCentroid(String geometryText) {
+        if (StringUtils.isBlank(geometryText)) {
+            return null;
+        }
+        else {
+            try {
+                reader.read(geometryText).getCentroid();
+            } catch (ParseException e){
+                return null;
+            }
+        }
+
+        return  null;
     }
 }

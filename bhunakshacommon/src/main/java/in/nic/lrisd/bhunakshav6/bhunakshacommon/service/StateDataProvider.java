@@ -6,11 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public interface StateDataProviderService {
-
-    public static final String FORWARD = "F";
-    public static final String SENDBACK = "S";
-    public static final String APPROVE = "A";
+public interface StateDataProvider {
 
     public abstract boolean validateDB();
 

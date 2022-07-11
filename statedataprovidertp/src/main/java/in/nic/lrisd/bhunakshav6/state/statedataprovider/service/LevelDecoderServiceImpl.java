@@ -1,16 +1,19 @@
 package in.nic.lrisd.bhunakshav6.state.statedataprovider.service;
 
 import in.nic.lrisd.bhunakshav6.bhunakshacommon.entity.CodeValueObj;
-import in.nic.lrisd.bhunakshav6.bhunakshacommon.service.LevelDecoderService;
+import in.nic.lrisd.bhunakshav6.bhunakshacommon.service.LevelDecoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Service
-public class LevelDecoderServiceImpl implements LevelDecoderService {
+public class LevelDecoderServiceImpl implements LevelDecoder {
 
     @Override
     public int getVsrLevelCount() {
@@ -60,6 +63,11 @@ public class LevelDecoderServiceImpl implements LevelDecoderService {
             default:
                 return "";
         }
+    }
+
+    @Override
+    public List<String> getAllLevelLablesEn() {
+        return Stream.of("District", "Subdivision", "Ri", "Tehsil", "Village", "Sheet No").collect(Collectors.toList());
     }
 
     @Override

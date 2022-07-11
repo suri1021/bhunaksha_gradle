@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class LevelReaderServiceImpl implements LevelReader {
+public class LevelReaderImpl implements LevelReader {
 
     @Autowired
     private LevelReaderDAO levelReaderDAO;

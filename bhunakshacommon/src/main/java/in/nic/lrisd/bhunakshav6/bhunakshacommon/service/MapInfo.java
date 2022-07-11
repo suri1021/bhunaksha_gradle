@@ -1,12 +1,13 @@
 package in.nic.lrisd.bhunakshav6.bhunakshacommon.service;
 
+import org.locationtech.jts.geom.Point;
 import org.springframework.http.ResponseEntity;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Map;
 
-public interface MapInfoService {
+public interface MapInfo {
     public Map getExtent(String gisCode, String plotId) throws Exception;
     public Map getFMBExtentGeoref(int srs,String vsrNo,String gisCode,String vsrLevels,String gisLevels) throws Exception;
     public List<Map<String, String>> getPlotId(String gisCode, String plotno) throws Exception;
@@ -37,6 +38,9 @@ public interface MapInfoService {
     public String getGisCode(String plotNo, String currentGisCode);
     public String getPageSizes();
     public String getPlotInfo(String mutationNo, String vsrNo, String plotNo);
+
+    Map getPlotInfo(String gisCode, String plotNo);
+
     public Map<String, List<Map<String, String>>> getAllLayersEdition(String giscode, String kide);
     public String getCompressdata(String plotId);
     public Map<String, List<Map<String, String>>> getLayers(String giscode, String code);
@@ -49,4 +53,6 @@ public interface MapInfoService {
     public String getCRS(String gisCode);
     public String isValidGisCode(String gisCode);
     public String getPointsfromPNIU(String pniu,String gisCode);
+
+    Point getCentroid(String geometryText);
 }

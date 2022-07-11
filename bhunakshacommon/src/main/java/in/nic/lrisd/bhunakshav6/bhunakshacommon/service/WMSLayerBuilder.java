@@ -4,6 +4,7 @@ import in.nic.lrisd.bhunakshav6.bhunakshacommon.bean.LayerCodes;
 import in.nic.lrisd.bhunakshav6.bhunakshacommon.bean.WMSParms;
 import in.nic.lrisd.bhunakshav6.bhunakshacommon.entity.Khasramap;
 import in.nic.lrisd.bhunakshav6.bhunakshacommon.globalsettings.TablePartition;
+import org.apache.commons.lang3.StringUtils;
 import org.geotools.data.collection.ListFeatureCollection;
 import org.geotools.feature.SchemaException;
 import org.geotools.filter.text.cql2.CQLException;
@@ -18,6 +19,7 @@ import org.geotools.styling.SLD;
 import org.geotools.styling.Style;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
@@ -56,13 +58,13 @@ public class WMSLayerBuilder {
     private MapDataUtil mapDataUtil = new MapDataUtil();
 
     @Autowired
-    private  StateDataProviderService stateDataProvider;
+    private StateDataProvider stateDataProvider;
 
     @Autowired
-    private LevelReaderService levelReader;
+    private LevelReader levelReader;
 
     @Autowired
-    private LevelDecoderService levelDecoder;
+    private LevelDecoder levelDecoder;
 
     @Autowired
     private AppSettingsService appSettingsService;
@@ -1302,5 +1304,4 @@ public class WMSLayerBuilder {
         }
         return false;
     }
-
 }

@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 
 @Service
-public class LevelDecoderServiceImpl implements LevelDecoder {
+public class LevelDecoderImpl implements LevelDecoder {
 
     @Override
     public int getVsrLevelCount() {
@@ -81,7 +81,7 @@ public class LevelDecoderServiceImpl implements LevelDecoder {
     public String createGisCode(String... levelCodes) throws Exception {
 
         if (levelCodes.length < (getVsrLevelCount() + getMapLevelCount())) {
-            Logger.getLogger(LevelDecoderServiceImpl.class.getName()).log(Level.SEVERE, "Invalid parameters to create gisCode", "Invalid parameters to create gisCode");
+            Logger.getLogger(LevelDecoderImpl.class.getName()).log(Level.SEVERE, "Invalid parameters to create gisCode", "Invalid parameters to create gisCode");
         } else {
             return levelCodes[0] + "" + levelCodes[1] + "" + levelCodes[2] + levelCodes[3] + levelCodes[4];
         }
@@ -102,7 +102,7 @@ public class LevelDecoderServiceImpl implements LevelDecoder {
             }
 
         } catch (Exception ex) {
-            Logger.getLogger(LevelDecoderServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LevelDecoderImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -119,7 +119,7 @@ public class LevelDecoderServiceImpl implements LevelDecoder {
                 return levels;
             }
         } catch (Exception ex) {
-            Logger.getLogger(LevelDecoderServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LevelDecoderImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

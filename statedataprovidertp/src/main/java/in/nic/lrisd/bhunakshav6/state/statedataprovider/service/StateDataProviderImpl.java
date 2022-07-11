@@ -1,7 +1,7 @@
 package in.nic.lrisd.bhunakshav6.state.statedataprovider.service;
 
 import in.nic.lrisd.bhunakshav6.bhunakshacommon.bean.BhunakshaUser;
-import in.nic.lrisd.bhunakshav6.bhunakshacommon.service.StateDataProviderService;
+import in.nic.lrisd.bhunakshav6.bhunakshacommon.service.StateDataProvider;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class StateDataProviderImpl implements StateDataProviderService {
+public class StateDataProviderImpl implements StateDataProvider {
     @Override
     public boolean validateDB() {
         return false;

@@ -5,7 +5,7 @@ import in.nic.lrisd.bhunakshav6.bhunakshacommon.entity.CodeValueObj;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface LevelDecoderService {
+public interface LevelDecoder {
 
     public int getVsrLevelCount() throws Exception;
     public int getMapLevelCount() throws Exception;

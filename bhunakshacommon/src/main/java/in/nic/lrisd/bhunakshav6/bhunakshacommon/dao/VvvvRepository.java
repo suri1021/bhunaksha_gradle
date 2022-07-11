@@ -151,4 +151,23 @@ public class VvvvRepository implements VvvvDAO {
 
         return DaoUtil.convertTupleToMap((Tuple) query.getSingleResult());
     }
+
+    public List<Vvvv> findByPlotAtXYGeoref(int srs, String ptText, String pVsrno, String pGiscode, List skipCodes, String cql) {
+        String sqlQuery = "SELECT * FROM vvvv WHERE 1=1";
+        if (! StringUtils.isEmpty(pGiscode)) sqlQuery += " AND gis_code =:giscode  ";
+        if (! StringUtils.isEmpty(pVsrno)) sqlQuery += " AND vsrno =:vsrno  ";
+        if (! CollectionUtils.isEmpty(skipCodes)) sqlQuery += " AND   gis_code NOT IN(:skipCodes)";
+        if (! StringUtils.isEmpty(cql)) sqlQuery += " AND " + cql;
+        if (srs != 0) sqlQuery += " AND st_intersects( st_transform(st_setsrid(wkb_geometry,4326),  :srs),st_setsrid(st_geomfromtext(:ptText),:srs)) ";
+        else sqlQuery += " AND st_intersects( wkb_geometry,st_geomfromtext(?)) ";
+
+        Query query = entityManager.createNativeQuery(sqlQuery, Vvvv.class);
+        if (! StringUtils.isEmpty(pGiscode)) query.setParameter("giscode", pGiscode);
+        if (! StringUtils.isEmpty(pVsrno)) query.setParameter("vsrno", pVsrno);
+        if (! CollectionUtils.isEmpty(skipCodes)) query.setParameter("skipCodes", skipCodes);
+        if (srs != 0) query.setParameter("srs", srs);
+        if (StringUtils.isEmpty(ptText)) query.setParameter("ptText", ptText);
+
+        return  query.getResultList();
+    }
 }

@@ -57,8 +57,6 @@ public class WMSService {
             gr.fill(imageBounds);
             renderer.setMapContent(map);
             renderer.paint(gr, imageBounds, wmsParms.getBbox());
-
-            //out = response.getOutputStream();
             baos = new ByteArrayOutputStream();
             ImageIO.write(image, "png", baos);
             byte[] imageData = baos.toByteArray();
@@ -81,9 +79,7 @@ public class WMSService {
 
             if (gr != null) {
                 gr.dispose();
-//                gr = null;
             }
-
         }
         return null;
     }
